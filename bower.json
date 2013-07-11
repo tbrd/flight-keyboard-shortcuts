@@ -1,6 +1,7 @@
 {
   "name": "flight-keyboard-shortcuts",
   "version": "0.0.1",
+  "main": "lib/keyboard-shortcuts.js",
   "dependencies": {
     "flight": "~1.0.9"
   },
