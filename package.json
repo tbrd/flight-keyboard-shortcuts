@@ -1,0 +1,10 @@
+{
+  "name": "flight-keyboard-shortcuts",
+  "version": "0.0.1",
+  "devDependencies": {
+    "karma": "~0.8.5"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+  }
+}
