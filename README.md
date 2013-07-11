@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/<username>/flight-keyboard-shortcuts.png)](http://travis-ci.org/<username>/flight-keyboard-shortcuts)
 
-A [Flight](https://github.com/flightjs/flight) component for…
+A [Flight](https://github.com/flightjs/flight) component for keyboard shortcuts
 
 ## Installation
 
@@ -38,15 +38,7 @@ keyboardShortcuts.attachTo(document, {
 });
 ```
 
-## Event examples
-
-shortcut-add
----------------------
-Options
-shortcut     required    String    a key, combo string or key sequence
-eventName    required    String    event to fire when key is pressed
-selector     optional    String    CSS selector
----------------------
+## Events
 
 ## single key:
 ```javascript
@@ -91,6 +83,7 @@ this.trigger('shortcut-add', {
 
 Text inputs (input, textarea) are ignored by default. if you want to listen to events on input
 elements, add a selector as a third parameter:
+
 ```javascript
 this.trigger('shortcut-add', {
  shortcut: 'esc',
@@ -98,14 +91,6 @@ this.trigger('shortcut-add', {
  selector: 'textarea, input'
 });
 ```
-
-shortcut-remove
----------------------
-params
-shortcut     Required    String      A key, combo string or key sequence
-eventName    Optional    String      Event name
-selector     Optional    String      CSS selector
----------------------
 
 ## remove all shortcuts for a key
 ```javascript
