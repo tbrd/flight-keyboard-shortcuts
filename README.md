@@ -36,78 +36,83 @@ keyboardShortcuts.attachTo(document, {
     }
   ]
 });
+```
 
- ## Event examples
+## Event examples
 
- shortcut-add
- ---------------------
- Options
- shortcut     required    String    a key, combo string or key sequence
- eventName    required    String    event to fire when key is pressed
- selector     optional    String    CSS selector
- ---------------------
+shortcut-add
+---------------------
+Options
+shortcut     required    String    a key, combo string or key sequence
+eventName    required    String    event to fire when key is pressed
+selector     optional    String    CSS selector
+---------------------
 
- ## single key:
+## single key:
+```javascript
+this.trigger('shortcut-add', {
+ shortcut: 'c',
+ eventName: 'compose-tweet'
+});
+```
 
- this.trigger('shortcut-add', {
-   shortcut: 'c',
-   eventName: 'compose-tweet'
- });
+## throttled (100ms):
+```javascript
+this.trigger('shortcut-add', {
+ shortcut: 'c',
+ eventName: 'compose-tweet',
+ throttle: true
+});
+```
 
- ## throttled (100ms):
+## named key:
+```javascript
+this.trigger('shortcut-add', {
+ shortcut: 'esc',
+ eventName: 'close-dialog'
+});
+```
 
- this.trigger('shortcut-add', {
-   shortcut: 'c',
-   eventName: 'compose-tweet',
-   throttle: true
- });
+## sequence:
+```javascript
+this.trigger('shortcut-add', {
+ shortcut: 'g i',
+ eventName: 'go-inbox'
+});
+```
 
- ## named key:
+## combo:
+```javascript
+this.trigger('shortcut-add', {
+ shortcut: 'CTRL+ret',
+ eventName: 'send-tweet'
+});
+```
 
- this.trigger('shortcut-add', {
-   shortcut: 'esc',
-   eventName: 'close-dialog'
- });
+Text inputs (input, textarea) are ignored by default. if you want to listen to events on input
+elements, add a selector as a third parameter:
+```javascript
+this.trigger('shortcut-add', {
+ shortcut: 'esc',
+ eventName: 'unfocus',
+ selector: 'textarea, input'
+});
+```
 
- ## sequence:
+shortcut-remove
+---------------------
+params
+shortcut     Required    String      A key, combo string or key sequence
+eventName    Optional    String      Event name
+selector     Optional    String      CSS selector
+---------------------
 
- this.trigger('shortcut-add', {
-   shortcut: 'g i',
-   eventName: 'go-inbox'
- });
-
- ## combo:
-
- this.trigger('shortcut-add', {
-   shortcut: 'CTRL+ret',
-   eventName: 'send-tweet'
- });
-
- Text inputs (input, textarea) are ignored by default. if you want to listen to events on input
- elements, add a selector as a third parameter:
-
- this.trigger('shortcut-add', {
-   shortcut: 'esc',
-   eventName: 'unfocus',
-   selector: 'textarea, input'
- });
-
-
- shortcut-remove
- ---------------------
- params
- shortcut     Required    String      A key, combo string or key sequence
- eventName    Optional    String      Event name
- selector     Optional    String      CSS selector
- ---------------------
-
- ## remove all shortcuts for a key
-
- this.trigger('shortcut-remove', {
-   shortcut: 'esc'
- });
-
-…
+## remove all shortcuts for a key
+```javascript
+this.trigger('shortcut-remove', {
+ shortcut: 'esc'
+});
+```
 
 ## Development
 
