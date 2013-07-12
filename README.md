@@ -1,6 +1,6 @@
 # flight-keyboard-shortcuts
 
-[![Build Status](https://secure.travis-ci.org/<username>/flight-keyboard-shortcuts.png)](http://travis-ci.org/<username>/flight-keyboard-shortcuts)
+[![Build Status](https://secure.travis-ci.org/tbrd/flight-keyboard-shortcuts.png)](http://travis-ci.org/tbrd/flight-keyboard-shortcuts)
 
 A [Flight](https://github.com/flightjs/flight) component for keyboard shortcuts
 
