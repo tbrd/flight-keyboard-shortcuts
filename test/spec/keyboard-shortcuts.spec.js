@@ -866,5 +866,128 @@ describeComponent('lib/keyboard-shortcuts', function () {
     });
   });
 
+  describe('initialize', function () {
+    beforeEach(function () {
+      this.spy = spyOnEvent(document, 'test-event');
+    });
+
+    it('should register event for key', function () {
+      setupComponent({
+        shortcuts: {
+          esc: [
+            {
+              eventName: 'test-event'
+            }
+          ]
+        }
+      });
+
+      this.keydown.which = 27;
+      // should not trigger when selector does not match
+      this.component.$node.trigger(this.keydown);
+      expect(this.spy.callCount).toBe(1);
+    });
+
+    it('should mind selector', function () {
+      setupComponent({
+        shortcuts: {
+          esc: [
+            {
+              eventName: 'test-event',
+              selector: '.someSelector'
+            }
+          ]
+        }
+      });
+
+      this.keydown.which = 27;
+
+      // should not trigger when selector does not match
+      this.component.$node.trigger(this.keydown);
+      expect(this.spy.callCount).toBe(0);
+
+      // should trigger for matched selector
+      this.component.$node.addClass('someSelector');
+      this.component.$node.trigger(this.keydown);
+      expect(this.spy.callCount).toBe(1);
+    });
+
+    it('should debounce 200ms by default', function () {
+      setupComponent({
+        shortcuts: {
+          esc: [
+            {
+              eventName: 'test-event'
+            }
+          ]
+        }
+      });
+
+      this.keydown.which = 27;
+      var keydown2 = jQuery.Event('keydown');
+      var keydown3 = jQuery.Event('keydown');
+      keydown2.which = 27;
+      keydown3.which = 27;
+
+      // should not get called if last trigger was < 200ms ago
+
+      this.component.$node.trigger(this.keydown);
+      waits(150);
+      runs(function () {
+        this.component.$node.trigger(keydown2);
+        expect(this.spy.callCount).toBe(1);
+      });
+
+      // should get called if last trigger was > 200ms ago
+
+      waits(250);
+      runs(function () {
+        this.component.$node.trigger(keydown3);
+        expect(this.spy.callCount).toBe(2);
+      });
+
+    });
+
+    it('should throttle 100ms when set', function () {
+      setupComponent({
+        shortcuts: {
+          esc: [
+            {
+              eventName: 'test-event',
+              throttle: true
+            }
+          ]
+        }
+      });
+
+      this.keydown.which = 27;
+      var keydown2 = jQuery.Event('keydown');
+      var keydown3 = jQuery.Event('keydown');
+      keydown2.which = 27;
+      keydown3.which = 27;
+
+      // should callback immediately
+      this.component.$node.trigger(this.keydown);
+      expect(this.spy.callCount).toBe(1);
+
+      // should not callback if last call was < 100ms ago
+      waits(50);
+      runs(function () {
+        this.component.$node.trigger(keydown2);
+        expect(this.spy.callCount).toBe(1);
+      });
+
+      // should callback if last call was > 100ms ago
+      waits(100); // total 150
+      runs(function () {
+        this.component.$node.trigger(keydown3);
+        expect(this.spy.callCount).toBe(2);
+      });
+
+    });
+
+
+  });
+
 });
 
