@@ -15,6 +15,7 @@ bower install --save flight-keyboard-shortcuts
 ```javascript
 var keyboardShortcuts = require('component/keyboard-shortcuts');
 keyboardShortcuts.attachTo(document, {
+  debounce: 300, // ms. defaults to 200
   esc: [
     {
       eventName: 'close-dialog'
@@ -35,6 +36,12 @@ keyboardShortcuts.attachTo(document, {
       throttle: true
     }
   ]
+  'left': [
+     {
+       eventName: 'left-arrow'
+       throttle: 200 // ms. defaults to 100
+     }
+   ]
 });
 ```
 
@@ -98,6 +105,21 @@ this.trigger('shortcut-remove', {
  shortcut: 'esc'
 });
 ```
+
+## Named keys
+
+* esc: 27
+* ret: 13
+* del: 46
+* left: 37
+* up: 38
+* right: 39
+* down: 40
+* bksp: 8
+* pageup: 33
+* pagedown: 34
+* home: 36
+* end: 35
 
 ## Development
 
