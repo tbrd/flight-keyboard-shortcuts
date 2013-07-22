@@ -948,7 +948,44 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
     });
 
-    it('should throttle 100ms when set', function () {
+    it('should accept global debounce period', function () {
+      setupComponent({
+        debounce: 100,
+        shortcuts: {
+          esc: [
+            {
+              eventName: 'test-event'
+            }
+          ]
+        }
+      });
+
+      this.keydown.which = 27;
+      var keydown2 = jQuery.Event('keydown');
+      var keydown3 = jQuery.Event('keydown');
+      keydown2.which = 27;
+      keydown3.which = 27;
+
+      // should not get called if last trigger was < debouncePeriod ago
+
+      this.component.$node.trigger(this.keydown);
+      waits(50);
+      runs(function () {
+        this.component.$node.trigger(keydown2);
+        expect(this.spy.callCount).toBe(1);
+      });
+
+      // should get called if last trigger was > debouncePeriod ago
+
+      waits(100);
+      runs(function () {
+        this.component.$node.trigger(keydown3);
+        expect(this.spy.callCount).toBe(2);
+      });
+
+    });
+
+    it('should throttle 100ms by default', function () {
       setupComponent({
         shortcuts: {
           esc: [
@@ -985,6 +1022,85 @@ describeComponent('lib/keyboard-shortcuts', function () {
       });
 
     });
+
+    it('should accept global throttle period', function () {
+      setupComponent({
+        throttle: 50,
+        shortcuts: {
+          esc: [
+            {
+              eventName: 'test-event',
+              throttle: true
+            }
+          ]
+        }
+      });
+
+      this.keydown.which = 27;
+      var keydown2 = jQuery.Event('keydown');
+      var keydown3 = jQuery.Event('keydown');
+      keydown2.which = 27;
+      keydown3.which = 27;
+
+      // should callback immediately
+      this.component.$node.trigger(this.keydown);
+      expect(this.spy.callCount).toBe(1);
+
+      // should not callback if last call was < throttle period ago
+      waits(20);
+      runs(function () {
+        this.component.$node.trigger(keydown2);
+        expect(this.spy.callCount).toBe(1);
+      });
+
+      // should callback if last call was > throttle period ago
+      waits(70); // total 90
+      runs(function () {
+        this.component.$node.trigger(keydown3);
+        expect(this.spy.callCount).toBe(2);
+      });
+
+    });
+
+    it('should accept custom throttle period', function () {
+      setupComponent({
+        throttle: 100,
+        shortcuts: {
+          esc: [
+            {
+              eventName: 'test-event',
+              throttle: 50
+            }
+          ]
+        }
+      });
+
+      this.keydown.which = 27;
+      var keydown2 = jQuery.Event('keydown');
+      var keydown3 = jQuery.Event('keydown');
+      keydown2.which = 27;
+      keydown3.which = 27;
+
+      // should callback immediately
+      this.component.$node.trigger(this.keydown);
+      expect(this.spy.callCount).toBe(1);
+
+      // should not callback if last call was < throttle period ago
+      waits(20);
+      runs(function () {
+        this.component.$node.trigger(keydown2);
+        expect(this.spy.callCount).toBe(1);
+      });
+
+      // should callback if last call was > throttle period ago
+      waits(70); // total 90
+      runs(function () {
+        this.component.$node.trigger(keydown3);
+        expect(this.spy.callCount).toBe(2);
+      });
+
+    });
+
 
 
   });
