@@ -977,7 +977,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
       // should get called if last trigger was > debouncePeriod ago
 
-      waits(100);
+      waits(200);
       runs(function () {
         this.component.$node.trigger(keydown3);
         expect(this.spy.callCount).toBe(2);
@@ -1025,7 +1025,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
     it('should accept global throttle period', function () {
       setupComponent({
-        throttle: 50,
+        throttle: 200,
         shortcuts: {
           esc: [
             {
@@ -1047,14 +1047,14 @@ describeComponent('lib/keyboard-shortcuts', function () {
       expect(this.spy.callCount).toBe(1);
 
       // should not callback if last call was < throttle period ago
-      waits(20);
+      waits(150);
       runs(function () {
         this.component.$node.trigger(keydown2);
         expect(this.spy.callCount).toBe(1);
       });
 
       // should callback if last call was > throttle period ago
-      waits(70); // total 90
+      waits(100); // total 250
       runs(function () {
         this.component.$node.trigger(keydown3);
         expect(this.spy.callCount).toBe(2);
@@ -1064,12 +1064,12 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
     it('should accept custom throttle period', function () {
       setupComponent({
-        throttle: 100,
+        throttle: 200,
         shortcuts: {
           esc: [
             {
               eventName: 'test-event',
-              throttle: 50
+              throttle: 100
             }
           ]
         }
@@ -1086,14 +1086,14 @@ describeComponent('lib/keyboard-shortcuts', function () {
       expect(this.spy.callCount).toBe(1);
 
       // should not callback if last call was < throttle period ago
-      waits(20);
+      waits(50);
       runs(function () {
         this.component.$node.trigger(keydown2);
         expect(this.spy.callCount).toBe(1);
       });
 
       // should callback if last call was > throttle period ago
-      waits(70); // total 90
+      waits(100); // total 150
       runs(function () {
         this.component.$node.trigger(keydown3);
         expect(this.spy.callCount).toBe(2);
