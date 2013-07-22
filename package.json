@@ -1,6 +1,6 @@
 {
   "name": "flight-keyboard-shortcuts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "devDependencies": {
     "karma": "~0.8.5"
   },
