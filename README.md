@@ -43,6 +43,14 @@ keyboardShortcuts.attachTo(document, {
      }
    ]
 });
+
+//simplified options specifying events only
+keyboardShortcuts.attachTo(document, {
+  esc: 'close-dialog',
+  c: 'compose-tweet',
+  'CTRL+ret': 'send-tweet',
+  'left': 'left-arrow'
+});
 ```
 
 ## Events
