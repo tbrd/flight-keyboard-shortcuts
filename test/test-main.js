@@ -6,10 +6,10 @@ var tests = Object.keys(window.__karma__.files).filter(function (file) {
 
 requirejs.config({
   // Karma serves files from '/base'
-  baseUrl: '/base',
+  baseUrl: '/base/app/bower_components',
 
   paths: {
-    'flight': 'bower_components/flight'
+    'lib': '../../lib'
   },
 
   // ask Require.js to load these files (all our tests)

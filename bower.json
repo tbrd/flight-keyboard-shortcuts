@@ -4,7 +4,8 @@
   "version": "0.0.2",
   "main": "lib/keyboard-shortcuts.js",
   "dependencies": {
-    "flight": "~1.0.9"
+    "flight": "~1.1.0",
+    "requirejs": "~2.1.5"
   },
   "devDependencies": {
     "jasmine-flight": "*",
