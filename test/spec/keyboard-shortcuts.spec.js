@@ -1100,10 +1100,33 @@ describeComponent('lib/keyboard-shortcuts', function () {
       });
 
     });
-
-
-
   });
 
+  describe('simplified options', function () {
+    beforeEach(function () {
+      this.spy1 = spyOnEvent(document, 'test-event-1');
+      this.spy2 = spyOnEvent(document, 'test-event-2');
+    });
+
+    it('should accept simplified options', function () {
+
+      setupComponent({
+        shortcuts: {
+          o: 'test-event-1',
+          esc: 'test-event-2'
+        }
+      });
+
+      this.keypress.which = 79; //o
+      this.component.$node.trigger(this.keypress);
+      expect(this.spy1.callCount).toBe(1);
+      expect(this.spy2.callCount).toBe(0);
+
+      this.keydown.which = 27; //p
+      this.component.$node.trigger(this.keydown);
+      expect(this.spy1.callCount).toBe(1);
+      expect(this.spy2.callCount).toBe(1);
+    });
+  });
 });
 
