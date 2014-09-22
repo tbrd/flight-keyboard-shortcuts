@@ -13,8 +13,10 @@
   },
   "scripts": {
     "server": "static app",
-    "test": "karma start --single-run --browsers PhantomJS",
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
     "watch": "npm run server > server.log & npm run livereload",
-    "watch-test": "karma start"
+    "watch-test": "./node_modules/karma/bin/karma start"
   }
 }
+
+
