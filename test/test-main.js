@@ -1,20 +1,28 @@
-'use strict';
+var allTestFiles = [];
+var TEST_REGEXP = /(spec|test)\.js$/i;
 
-var tests = Object.keys(window.__karma__.files).filter(function (file) {
-  return (/\.spec\.js$/.test(file));
+var pathToModule = function(path) {
+  return path.replace(/^\/base\//, '').replace(/\.js$/, '');
+};
+
+Object.keys(window.__karma__.files).forEach(function(file) {
+  if (TEST_REGEXP.test(file)) {
+    // Normalize paths to RequireJS module names.
+    allTestFiles.push(pathToModule(file));
+  }
 });
 
-requirejs.config({
-  // Karma serves files from '/base'
-  baseUrl: '/base/app/bower_components',
+require.config({
+  // Karma serves files under /base, which is the basePath from your config file
+  baseUrl: '/base',
 
   paths: {
-    'lib': '../../lib'
+      'flight': 'app/bower_components/flight'
   },
 
-  // ask Require.js to load these files (all our tests)
-  deps: tests,
+  // dynamically load all test files
+  deps: allTestFiles,
 
-  // start test run, once Require.js is done
+  // we have to kickoff jasmine, as it is asynchronous
   callback: window.__karma__.start
 });

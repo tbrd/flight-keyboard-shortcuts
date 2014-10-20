@@ -4,6 +4,8 @@
 
 A [Flight](https://github.com/flightjs/flight) component for keyboard shortcuts
 
+(Updated to Flight 1.2 and Jasmine 2) 
+
 ## Installation
 
 ```bash

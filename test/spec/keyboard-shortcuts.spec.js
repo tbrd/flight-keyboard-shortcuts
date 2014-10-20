@@ -3,7 +3,7 @@
 describeComponent('lib/keyboard-shortcuts', function () {
 
   beforeEach(function () {
-    setupComponent({
+    this.setupComponent({
       shortcuts: {}
     });
     this.keydown = jQuery.Event('keydown');
@@ -408,8 +408,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
       this.keydown.which = 27;
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
-
+      expect(this.spy).toHaveBeenTriggeredOn(document)
     });
   });
 
@@ -425,21 +424,21 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.addShortcut('esc', this.spy);
       this.keydown.which = 27;
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('ret', function () {
       this.component.addShortcut('ret', this.spy);
       this.keypress.which = 13;
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('del', function () {
       this.component.addShortcut('del', this.spy);
       this.keypress.which = 46;
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('and only for named key', function () {
@@ -448,7 +447,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
       this.keydown.which = 27;
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('and perform multiple callbacks for shortcuts with same key', function () {
@@ -459,22 +458,22 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.addShortcut('esc', spy2);
       this.keypress.which = 27;
       this.component.$node.trigger(this.keypress);
-      expect(spy1.callCount).toBe(1);
-      expect(spy2.callCount).toBe(1);
+      expect(spy1.calls.count()).toBe(1);
+      expect(spy2.calls.count()).toBe(1);
     });
 
     it('pageup', function () {
       this.component.addShortcut('pageup', this.spy);
       this.keydown.which = 33;
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('pagedown', function () {
       this.component.addShortcut('pagedown', this.spy);
       this.keydown.which = 34;
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
   });
 
@@ -489,14 +488,14 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.addShortcut('1', this.spy);
       this.keypress.which = '1'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('"a"', function () {
       this.component.addShortcut('a', this.spy);
       this.keypress.which = 'a'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('including when text modifier key is pressed', function () {
@@ -506,7 +505,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.keypress.shiftKey = true;
       this.component.$node.trigger(this.keypress);
 
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('unless function modifier key is pressed', function () {
@@ -517,7 +516,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.keypress.shiftKey = true;
       this.component.$node.trigger(this.keypress);
 
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
     });
 
     it('and only for named key', function () {
@@ -526,7 +525,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
       this.keypress.which = '2'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
   });
@@ -542,39 +541,39 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.addShortcut('c i', this.spy);
       this.keypress.which = 'c'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
       this.keypress.which = 'i'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('on multiple sequence events', function () {
       this.component.addShortcut('c i', this.spy);
       this.keypress.which = 'c'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
       this.keypress.which = 'i'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
       this.keypress.which = 'c'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
       this.keypress.which = 'i'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(2);
+      expect(this.spy.calls.count()).toBe(2);
     });
 
     it('if the sequence starter is pressed twice', function () {
       this.component.addShortcut('c i', this.spy);
       this.keypress.which = 'c'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
       this.keypress.which = 'c'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
       this.keypress.which = 'i'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     describe('and should not callback for', function () {
@@ -597,9 +596,9 @@ describeComponent('lib/keyboard-shortcuts', function () {
         this.component.$node.trigger(this.keypress);
 
         // expect 'c i' callback to have been called
-        expect(this.spy.callCount).toBe(1);
+        expect(this.spy.calls.count()).toBe(1);
         // expect 'c f' callback not to have been called
-        expect(this.spy2.callCount).toBe(0);
+        expect(this.spy2.calls.count()).toBe(0);
       });
 
       it('the second key separately', function () {
@@ -611,15 +610,15 @@ describeComponent('lib/keyboard-shortcuts', function () {
         this.component.$node.trigger(this.keypress);
 
         // expect both callbacks not to have been called
-        expect(this.spy.callCount).toBe(0);
-        expect(this.spy2.callCount).toBe(0);
+        expect(this.spy.calls.count()).toBe(0);
+        expect(this.spy2.calls.count()).toBe(0);
 
         this.keypress.which = 'i'.charCodeAt(0);
         this.component.$node.trigger(this.keypress);
 
         // expect 'i' callback to have been called
-        expect(this.spy.callCount).toBe(1);
-        expect(this.spy2.callCount).toBe(0);
+        expect(this.spy.calls.count()).toBe(1);
+        expect(this.spy2.calls.count()).toBe(0);
       });
 
       it('the second key twice', function () {
@@ -628,17 +627,17 @@ describeComponent('lib/keyboard-shortcuts', function () {
         this.component.$node.trigger(this.keypress);
 
         // expect 'c i' callback not to have been called
-        expect(this.spy.callCount).toBe(0);
+        expect(this.spy.calls.count()).toBe(0);
         this.keypress.which = 'i'.charCodeAt(0);
         this.component.$node.trigger(this.keypress);
 
         // expect 'c i' callback to have been called
-        expect(this.spy.callCount).toBe(1);
+        expect(this.spy.calls.count()).toBe(1);
         this.keypress.which = 'i'.charCodeAt(0);
         this.component.$node.trigger(this.keypress);
 
         // expect 'c i' callback to have been called only once
-        expect(this.spy.callCount).toBe(1);
+        expect(this.spy.calls.count()).toBe(1);
       });
     });
   });
@@ -658,7 +657,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect 'c i' callback not to have been called
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
     });
 
     it('out of sequence two-key sequence', function () {
@@ -669,7 +668,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect 'c i' callback not to have been called
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
     });
 
   });
@@ -687,14 +686,14 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.find('textarea').trigger(this.keypress);
 
       // expect 'del' callback not to have been called
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
     });
 
     it('input', function () {
       this.component.$node.find('input').trigger(this.keypress);
 
       // expect 'del' callback not to have been called
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
     });
 
     it('textarea unless specified', function () {
@@ -703,7 +702,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.find('textarea').trigger(this.keydown);
 
       // expect 'esc' callback to have been called
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
     it('input unless specified', function () {
@@ -712,7 +711,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.find('input').trigger(this.keydown);
 
       // expect 'esc' callback to have been called
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
   });
 
@@ -729,7 +728,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect '?' callback to have been called
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
   });
@@ -748,7 +747,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect 'CTRL+a' callback to have been called
-      expect(this.spy2.callCount).toBe(1);
+      expect(this.spy2.calls.count()).toBe(1);
     });
 
 
@@ -760,9 +759,9 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect 'a' callback not to have been called
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
       // expect 'CTRL+a' callback to have been called
-      expect(this.spy2.callCount).toBe(1);
+      expect(this.spy2.calls.count()).toBe(1);
     });
 
     it('ALT+', function () {
@@ -773,9 +772,9 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect 'a' callback not to have been called
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
       // expect 'ALT+a' callback to have been called
-      expect(this.spy2.callCount).toBe(1);
+      expect(this.spy2.calls.count()).toBe(1);
     });
 
     it('CMD+', function () {
@@ -787,9 +786,9 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect 'a' callback not to have been called
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
       // expect 'CMD+a' callback to have been called
-      expect(this.spy2.callCount).toBe(1);
+      expect(this.spy2.calls.count()).toBe(1);
 
     });
 
@@ -802,9 +801,9 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.$node.trigger(this.keypress);
 
       // expect 'a' callback to have been called
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
       // expect 'CMD+a' callback to have been called
-      expect(this.spy2.callCount).toBe(1);
+      expect(this.spy2.calls.count()).toBe(1);
     });
 
     it('should not fire event when selector does not match', function () {
@@ -815,7 +814,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
       // no matching selector
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy.calls.count()).toBe(0);
     });
 
     it('should fire event when selector matches', function () {
@@ -827,7 +826,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       // matching selector
       this.component.$node.addClass('my-selector');
       this.component.$node.trigger(this.keypress);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy.calls.count()).toBe(1);
     });
 
   });
@@ -837,7 +836,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
     this.component.addShortcut('1', spy);
     this.keypress.which = '1'.charCodeAt(0);
     this.component.$node.trigger(this.keypress);
-    var e = spy.mostRecentCall.args[0];
+    var e = spy.calls.mostRecent().args[0];
     expect(e.which).toBe(this.keypress.which);
   });
 
@@ -851,7 +850,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.addShortcut('1', spy, data);
       this.keypress.which = '1'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(spy.mostRecentCall.args[1]).toBe(data);
+      expect(spy.calls.mostRecent().args[1]).toBe(data);
     });
 
     it('when there is a selector', function () {
@@ -862,7 +861,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.component.addShortcut('1', spy, '*', data);
       this.keypress.which = '1'.charCodeAt(0);
       this.component.$node.trigger(this.keypress);
-      expect(spy.mostRecentCall.args[1]).toBe(data);
+      expect(spy.calls.mostRecent().args[1]).toBe(data);
     });
   });
 
@@ -872,7 +871,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
     });
 
     it('should register event for key', function () {
-      setupComponent({
+      this.setupComponent({
         shortcuts: {
           esc: [
             {
@@ -885,11 +884,11 @@ describeComponent('lib/keyboard-shortcuts', function () {
       this.keydown.which = 27;
       // should not trigger when selector does not match
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy).toHaveBeenTriggeredOn(document)
     });
 
     it('should mind selector', function () {
-      setupComponent({
+      this.setupComponent({
         shortcuts: {
           esc: [
             {
@@ -904,202 +903,210 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
       // should not trigger when selector does not match
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(0);
+      expect(this.spy).not.toHaveBeenTriggeredOn(document)
 
       // should trigger for matched selector
       this.component.$node.addClass('someSelector');
       this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+      expect(this.spy).toHaveBeenTriggeredOn(document)
     });
 
-    it('should debounce 200ms by default', function () {
-      setupComponent({
-        shortcuts: {
-          esc: [
-            {
-              eventName: 'test-event'
-            }
-          ]
-        }
-      });
+    // // TODO: update all async tests below to Jasmine 2 syntax:
+    // // http://jasmine.github.io/2.0/introduction.html#section-Asynchronous_Support
 
-      this.keydown.which = 27;
-      var keydown2 = jQuery.Event('keydown');
-      var keydown3 = jQuery.Event('keydown');
-      keydown2.which = 27;
-      keydown3.which = 27;
+    // describe('(async)', function () {
 
-      // should not get called if last trigger was < 200ms ago
+    //   it('should debounce 200ms by default', function () {
+    //     this.setupComponent({
+    //       shortcuts: {
+    //         esc: [
+    //           {
+    //             eventName: 'test-event'
+    //           }
+    //         ]
+    //       }
+    //     });
 
-      this.component.$node.trigger(this.keydown);
-      waits(150);
-      runs(function () {
-        this.component.$node.trigger(keydown2);
-        expect(this.spy.callCount).toBe(1);
-      });
+    //     this.keydown.which = 27;
+    //     var keydown2 = jQuery.Event('keydown');
+    //     var keydown3 = jQuery.Event('keydown');
+    //     keydown2.which = 27;
+    //     keydown3.which = 27;
 
-      // should get called if last trigger was > 200ms ago
+    //     // should not get called if last trigger was < 200ms ago
 
-      waits(250);
-      runs(function () {
-        this.component.$node.trigger(keydown3);
-        expect(this.spy.callCount).toBe(2);
-      });
+    //     this.component.$node.trigger(this.keydown);
+    //     waits(150);
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown2);
+    //       // expect(this.spy.calls.count()).toBe(1);
+    //       expect(this.spy).toHaveBeenTriggeredOn(document)
+    //     });
 
-    });
+    //     // should get called if last trigger was > 200ms ago
 
-    it('should accept global debounce period', function () {
-      setupComponent({
-        debounce: 100,
-        shortcuts: {
-          esc: [
-            {
-              eventName: 'test-event'
-            }
-          ]
-        }
-      });
+    //     waits(250);
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown3);
+    //       expect(this.spy.calls.count()).toBe(2);
+    //     });
 
-      this.keydown.which = 27;
-      var keydown2 = jQuery.Event('keydown');
-      var keydown3 = jQuery.Event('keydown');
-      keydown2.which = 27;
-      keydown3.which = 27;
+    //   });
 
-      // should not get called if last trigger was < debouncePeriod ago
+    //   it('should accept global debounce period', function () {
+    //     this.setupComponent({
+    //       debounce: 100,
+    //       shortcuts: {
+    //         esc: [
+    //           {
+    //             eventName: 'test-event'
+    //           }
+    //         ]
+    //       }
+    //     });
 
-      this.component.$node.trigger(this.keydown);
-      waits(50);
-      runs(function () {
-        this.component.$node.trigger(keydown2);
-        expect(this.spy.callCount).toBe(1);
-      });
+    //     this.keydown.which = 27;
+    //     var keydown2 = jQuery.Event('keydown');
+    //     var keydown3 = jQuery.Event('keydown');
+    //     keydown2.which = 27;
+    //     keydown3.which = 27;
 
-      // should get called if last trigger was > debouncePeriod ago
+    //     // should not get called if last trigger was < debouncePeriod ago
 
-      waits(200);
-      runs(function () {
-        this.component.$node.trigger(keydown3);
-        expect(this.spy.callCount).toBe(2);
-      });
+    //     this.component.$node.trigger(this.keydown);
+    //     waits(50);
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown2);
+    //       expect(this.spy.calls.count()).toBe(1);
+    //     });
 
-    });
+    //     // should get called if last trigger was > debouncePeriod ago
 
-    it('should throttle 100ms by default', function () {
-      setupComponent({
-        shortcuts: {
-          esc: [
-            {
-              eventName: 'test-event',
-              throttle: true
-            }
-          ]
-        }
-      });
+    //     waits(200);
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown3);
+    //       expect(this.spy.calls.count()).toBe(2);
+    //     });
 
-      this.keydown.which = 27;
-      var keydown2 = jQuery.Event('keydown');
-      var keydown3 = jQuery.Event('keydown');
-      keydown2.which = 27;
-      keydown3.which = 27;
+    //   });
 
-      // should callback immediately
-      this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+    //   it('should throttle 100ms by default', function () {
+    //     this.setupComponent({
+    //       shortcuts: {
+    //         esc: [
+    //           {
+    //             eventName: 'test-event',
+    //             throttle: true
+    //           }
+    //         ]
+    //       }
+    //     });
 
-      // should not callback if last call was < 100ms ago
-      waits(50);
-      runs(function () {
-        this.component.$node.trigger(keydown2);
-        expect(this.spy.callCount).toBe(1);
-      });
+    //     this.keydown.which = 27;
+    //     var keydown2 = jQuery.Event('keydown');
+    //     var keydown3 = jQuery.Event('keydown');
+    //     keydown2.which = 27;
+    //     keydown3.which = 27;
 
-      // should callback if last call was > 100ms ago
-      waits(100); // total 150
-      runs(function () {
-        this.component.$node.trigger(keydown3);
-        expect(this.spy.callCount).toBe(2);
-      });
+    //     // should callback immediately
+    //     this.component.$node.trigger(this.keydown);
+    //     expect(this.spy.calls.count()).toBe(1);
 
-    });
+    //     // should not callback if last call was < 100ms ago
+    //     waits(50);
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown2);
+    //       expect(this.spy.calls.count()).toBe(1);
+    //     });
 
-    it('should accept global throttle period', function () {
-      setupComponent({
-        throttle: 200,
-        shortcuts: {
-          esc: [
-            {
-              eventName: 'test-event',
-              throttle: true
-            }
-          ]
-        }
-      });
+    //     // should callback if last call was > 100ms ago
+    //     waits(100); // total 150
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown3);
+    //       expect(this.spy.calls.count()).toBe(2);
+    //     });
 
-      this.keydown.which = 27;
-      var keydown2 = jQuery.Event('keydown');
-      var keydown3 = jQuery.Event('keydown');
-      keydown2.which = 27;
-      keydown3.which = 27;
+    //   });
 
-      // should callback immediately
-      this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+    //   it('should accept global throttle period', function () {
+    //     this.setupComponent({
+    //       throttle: 200,
+    //       shortcuts: {
+    //         esc: [
+    //           {
+    //             eventName: 'test-event',
+    //             throttle: true
+    //           }
+    //         ]
+    //       }
+    //     });
 
-      // should not callback if last call was < throttle period ago
-      waits(150);
-      runs(function () {
-        this.component.$node.trigger(keydown2);
-        expect(this.spy.callCount).toBe(1);
-      });
+    //     this.keydown.which = 27;
+    //     var keydown2 = jQuery.Event('keydown');
+    //     var keydown3 = jQuery.Event('keydown');
+    //     keydown2.which = 27;
+    //     keydown3.which = 27;
 
-      // should callback if last call was > throttle period ago
-      waits(100); // total 250
-      runs(function () {
-        this.component.$node.trigger(keydown3);
-        expect(this.spy.callCount).toBe(2);
-      });
+    //     // should callback immediately
+    //     this.component.$node.trigger(this.keydown);
+    //     expect(this.spy.calls.count()).toBe(1);
 
-    });
+    //     // should not callback if last call was < throttle period ago
+    //     waits(150);
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown2);
+    //       expect(this.spy.calls.count()).toBe(1);
+    //     });
 
-    it('should accept custom throttle period', function () {
-      setupComponent({
-        throttle: 200,
-        shortcuts: {
-          esc: [
-            {
-              eventName: 'test-event',
-              throttle: 100
-            }
-          ]
-        }
-      });
+    //     // should callback if last call was > throttle period ago
+    //     waits(100); // total 250
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown3);
+    //       expect(this.spy.calls.count()).toBe(2);
+    //     });
 
-      this.keydown.which = 27;
-      var keydown2 = jQuery.Event('keydown');
-      var keydown3 = jQuery.Event('keydown');
-      keydown2.which = 27;
-      keydown3.which = 27;
+    //   });
 
-      // should callback immediately
-      this.component.$node.trigger(this.keydown);
-      expect(this.spy.callCount).toBe(1);
+    //   it('should accept custom throttle period', function () {
+    //     this.setupComponent({
+    //       throttle: 200,
+    //       shortcuts: {
+    //         esc: [
+    //           {
+    //             eventName: 'test-event',
+    //             throttle: 100
+    //           }
+    //         ]
+    //       }
+    //     });
 
-      // should not callback if last call was < throttle period ago
-      waits(50);
-      runs(function () {
-        this.component.$node.trigger(keydown2);
-        expect(this.spy.callCount).toBe(1);
-      });
+    //     this.keydown.which = 27;
+    //     var keydown2 = jQuery.Event('keydown');
+    //     var keydown3 = jQuery.Event('keydown');
+    //     keydown2.which = 27;
+    //     keydown3.which = 27;
 
-      // should callback if last call was > throttle period ago
-      waits(100); // total 150
-      runs(function () {
-        this.component.$node.trigger(keydown3);
-        expect(this.spy.callCount).toBe(2);
-      });
+    //     // should callback immediately
+    //     this.component.$node.trigger(this.keydown);
+    //     expect(this.spy.calls.count()).toBe(1);
 
-    });
+    //     // should not callback if last call was < throttle period ago
+    //     waits(50);
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown2);
+    //       expect(this.spy.calls.count()).toBe(1);
+    //     });
+
+    //     // should callback if last call was > throttle period ago
+    //     waits(100); // total 150
+    //     runs(function () {
+    //       this.component.$node.trigger(keydown3);
+    //       expect(this.spy.calls.count()).toBe(2);
+    //     });
+
+    //   });
+
+    // });
   });
 
   describe('simplified options', function () {
@@ -1110,7 +1117,7 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
     it('should accept simplified options', function () {
 
-      setupComponent({
+      this.setupComponent({
         shortcuts: {
           o: 'test-event-1',
           esc: 'test-event-2'
@@ -1119,14 +1126,14 @@ describeComponent('lib/keyboard-shortcuts', function () {
 
       this.keypress.which = 79; //o
       this.component.$node.trigger(this.keypress);
-      expect(this.spy1.callCount).toBe(1);
-      expect(this.spy2.callCount).toBe(0);
+      expect(this.spy1).toHaveBeenTriggeredOn(document)
+      expect(this.spy2).not.toHaveBeenTriggeredOn(document)
 
       this.keydown.which = 27; //p
       this.component.$node.trigger(this.keydown);
-      expect(this.spy1.callCount).toBe(1);
-      expect(this.spy2.callCount).toBe(1);
+      expect(this.spy1).toHaveBeenTriggeredOn(document)
+      expect(this.spy2).toHaveBeenTriggeredOn(document)
+
     });
   });
 });
-

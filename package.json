@@ -2,22 +2,21 @@
   "name": "flight-keyboard-shortcuts",
   "version": "0.0.3",
   "devDependencies": {
-    "generator-flight": "~0.7.0",
-    "karma": "~0.10.0",
-    "karma-jasmine": "~0.1.0",
-    "karma-requirejs": "~0.1.0",
-    "karma-chrome-launcher": "~0.1.0",
-    "karma-ie-launcher": "~0.1.1",
-    "karma-firefox-launcher": "~0.1.0",
-    "karma-phantomjs-launcher": "~0.1.0",
-    "karma-safari-launcher": "~0.1.1",
-    "node-static": "~0.7.3",
-    "tiny-lr": "0.0.5"
+    "karma": "^0.12.23",
+    "karma-chrome-launcher": "~0.1.4",
+    "karma-jasmine": "^0.2.2",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-requirejs": "^0.2.2",
+    "node-static": "^0.7.5",
+    "requirejs": "^2.1.15",
+    "tiny-lr": "^0.1.4"
   },
   "scripts": {
     "server": "static app",
-    "test": "karma start --single-run --browsers PhantomJS",
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
     "watch": "npm run server > server.log & npm run livereload",
-    "watch-test": "karma start"
+    "watch-test": "./node_modules/karma/bin/karma start"
   }
 }
+
+
